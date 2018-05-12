@@ -1,5 +1,6 @@
 # coding=utf-8
 import datetime
+import logging
 
 import requests
 
@@ -77,7 +78,10 @@ def main():
     for _, user_info in settings.USER_DICT.items():
         user = User(user_info['api_key'], user_info['name'], user_info["mobile"])
         rescue_time = RescueTime(user, settings.WEB_HOOK)
-        rescue_time.send_message()
+        try:
+            rescue_time.send_message()
+        except:
+            logging.exception('Got exception on main')
 
 
 if __name__ == "__main__":
